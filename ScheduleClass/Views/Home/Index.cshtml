@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@using System.Data
+@model DataTable
+
+
+
+    <table>
+        <tr style="background-color:blue; color:white;border:1px solid black">
+            <td>Date</td>
+            <td>Time</td>
+            <td>Availability</td>
+            <td></td>v
+
+        </tr>
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                <td>@row["ScheduleDay"] @row["ScheduleDate"]</td>
+                <td>@row["ScheduleTime"]</td>
+                <td>@row["Availability"]</td>
+
+                @if (Convert.ToInt32(row["Availability"]) > 0)
+                {
+                    <td classId="@row["Availability"]" ><button onclick="book(@row["ID"])" >Book</button></td>
+                }
+                else
+                {
+                    <td><button>Full</button></td>
+                }
+
+
+            </tr>
+        }
+    </table>
+
+<script>
+    function book(Id)
+    {
+        debugger;
+          
+                
+                $.ajax({
+                    url: '/Home/Save?Id='+Id,
+                    data: ID,
+                    type: 'Post',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == "Success") {
+                            location.reload(true);
+                        }
+                    }
+
+                });
+            }
+            
+</script>
